@@ -12,12 +12,31 @@
 
 typedef unsigned short uint16;
 typedef signed short numtype;
+struct bytes_to_uint16{
+    char low_byte;
+    char high_byte;
+    uint16 uint16_;
+};
 
 class VM{
     public:
         void run();
         //VM constructor
-        VM::VM(std::string filename);
+        VM(std::string filename){
+            std::ifstream line(filename, std::ios::binary);
+            for (size_t ir=0; ir<reg.size(); ir++);
+            for (size_t im=0; im<memory.size();im++); 
+            char bytes [2];
+            bytes_to_uint16 btu;
+            int mem_idx=0;
+            while(line.read(bytes,2)){
+                btu.low_byte = bytes[0];
+                btu.high_byte = bytes[1];
+                memory[mem_idx] = btu.uint16_;
+                mem_idx++;
+            }
+
+        }
 
     private:
         std::vector<numtype> stack;
@@ -69,7 +88,7 @@ class VM{
     public:
     numtype to_binary_format (uint32_t value);
     void start_VM();
-    void run();
+    //void run();
     void loadProgram(std::vector<uint16> prog);
 
     numtype get_reg(VM vm, numtype reg_it){
@@ -89,8 +108,11 @@ class VM{
         return vm.memory[mem_it];
     }
 
-    void set_mem(numtype){
-        
+    void set_mem(VM vm, numtype mem_it, numtype mem){
+        if (mem_it < 32776){
+            //add memory int and see how to set memory to value specific
+            vm.memory[mem_it] = mem;
+        }
     }
 
 };

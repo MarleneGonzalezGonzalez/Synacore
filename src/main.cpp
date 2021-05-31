@@ -2,7 +2,7 @@
 
 int main(){
     
-    VM vm("../include/challenge.bin");
+    VM vm("../bin/challenge.bin");
 
     return 0;
 }

@@ -14,33 +14,13 @@
 
 
 //functions
-struct bytes_to_uint16{
-    char low_byte;
-    char high_byte;
-    uint16 uint16_;
-};
+
 
 //Stack VM
 //void VM::start_VM(std::string filename){
 //    load_file("filename");
 //    reg.insert(std::begin(reg), 8, 0);
 //}
-
-VM::VM(std::string filename){
-    std::ifstream line(filename, std::ios::binary);
-    for (size_t ir=0; ir<reg.size(); ir++) reg[ir]=0;
-    for (size_t im=0; im<memory.size();im++) memory[im]=0;
-    char bytes [2];
-    bytes_to_uint16 btu;
-    int mem_idx=0;
-    while(line.read(bytes,2)){
-        btu.low_byte = bytes[0];
-        btu.high_byte = bytes[1];
-        memory[mem_idx] = btu.uint16_;
-        mem_idx++;
-    }
-
-}
 
 numtype VM::to_binary_format (const uint32_t val) {
     if (val <= 32767) {

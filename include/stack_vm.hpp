@@ -29,10 +29,16 @@ class VM{
             char bytes [2];
             bytes_to_uint16 btu;
             int mem_idx=0;
-            while(line.read(bytes,2)){
+            while ((mem_idx==0) && (line.read(bytes,2))){
+                //std::cout<<("aAaaa")<<std::endl;
+            //    try{
                 btu.low_byte = bytes[0];
                 btu.high_byte = bytes[1];
                 memory[mem_idx] = btu.uint16_;
+            //    }
+            //    catch(int mem_idx){
+            //        std::cout<<mem_idx<<std::endl;
+             //   }
                 mem_idx++;
             }
 

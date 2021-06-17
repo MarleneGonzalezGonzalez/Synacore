@@ -35,7 +35,7 @@ numtype VM::to_binary_format (const uint32_t val) {
  
 numtype VM::read_value(const numtype val) {
     if(32767 < val && val < 32776) {
-        return reg.at(val);
+        return VM::reg[val];
     }
     std::exit(EXIT_FAILURE);
 }
@@ -43,7 +43,7 @@ numtype VM::read_value(const numtype val) {
 void VM::write_value(int pos, numtype val) {
     if(32767 < pos && pos < 32776) {
         pos -= 32768;
-        reg.at(pos) = val;
+        VM::reg[pos] = val;
     } else {
         std::exit(EXIT_FAILURE);
     }
@@ -72,7 +72,7 @@ void VM::push(){
 }
 
 void VM::pop(){
-
+    
 }
 
 void VM::eq(){
@@ -102,5 +102,38 @@ void VM::add(){
 void VM::mult(){
     //numtype a,b,c;
     //memory>>a*b;
+    
+}
+void VM::mod(){
+    
+}
+void VM::and_(){
+    
+}
+void VM::or_(){
+    
+}
+void VM::not_(){
+    
+}
+void VM::rmem(){
+    
+}
+void VM::wmem(){
+    
+}
+void VM::call(){
+    
+}
+void VM::ret(){
+    
+}
+void VM::out(){
+    
+}
+void VM::in_(){
+    
+}
+void VM::noop(){
     
 }

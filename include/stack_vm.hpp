@@ -2,52 +2,27 @@
 #include <vector>
 #include <stdint.h>
 #include <string>
-#include <vector>
 #include <fstream>
 #include <cstdint>
 #include <cinttypes>
+#include <unordered_map>
+#include <functional>
+#include <array>
+#include <any>
+using namespace std;
+
 
 #define MEMORY_SIZE 32768
 #define REGISTERS 8
 
 typedef unsigned short uint16;
 typedef signed short numtype;
-struct bytes_to_uint16{
-    char low_byte;
-    char high_byte;
-    uint16 uint16_;
-};
 
 class VM{
-    public:
-        void run();
-        //VM constructor
-        VM(std::string filename){
-            std::ifstream line(filename, std::ios::binary);
-            for (size_t ir=0; ir<reg.size(); ir++);
-            for (size_t im=0; im<memory.size();im++); 
-            char bytes [2];
-            bytes_to_uint16 btu;
-            int mem_idx=0;
-            while ((mem_idx==0) && (line.read(bytes,2))){
-                //std::cout<<("aAaaa")<<std::endl;
-            //    try{
-                btu.low_byte = bytes[0];
-                btu.high_byte = bytes[1];
-                memory[mem_idx] = btu.uint16_;
-            //    }
-            //    catch(int mem_idx){
-            //        std::cout<<mem_idx<<std::endl;
-             //   }
-                mem_idx++;
-            }
-
-        }
-
     private:
         std::vector<numtype> stack;
-        std::vector<numtype> reg;
-        std::vector<numtype> memory;
+        numtype reg[32776];
+        numtype memory[32777];
         numtype memory_it;
         
         numtype read_value(numtype val);
@@ -56,8 +31,9 @@ class VM{
         void run_program(uint16 ptr);
 
         //std::vector<std::function<void(void)>> prepareInstructions();
-        std::vector<char> input;
-        
+        //std::vector<char> input;
+//        using instruction_t = std::function<void()>;
+
         void halt();
         void set();
         void push();
@@ -81,17 +57,104 @@ class VM{
         void in_();
         void noop();
 
-    //int16_t pc =100; //program counter
-    //int16_t sp =100; //stack pointer- small register that stores the address of the last program request in a stack
+        //void (*funct[22])(void);  
+
+        void (VM::*func_ptr[23])(void) = {
+            &VM::halt, 
+            &VM::set,
+            &VM::push,
+            &VM::pop,
+            &VM::eq,
+            &VM::gr,
+            &VM::jmp,
+            &VM::jt,            //output (* pointer to function name) (function input)
+            &VM::jf,
+            &VM::add,
+            &VM::mult,
+            &VM::mod,
+            &VM::and_,
+            &VM::or_,
+            &VM::not_,
+            &VM::rmem,
+            &VM::wmem,
+            &VM::call,
+            &VM::ret,
+            &VM::out,
+            &VM::in_,
+            &VM::noop}; 
+
+        //using instruction_t = std::function<void()>;
+        //std::unordered_map<uint16_t, instruction_t> instruction_map {
+        //    {0x01, f1},
+        //    {0x02, f2},
+        //    {0x03, [](){ std::cout << "f3\n";}}
+        //};
+            //f func[22];
+        //funct[0]= halt;
+
+        //void (*functions[3])(halt);
+        //std::function<void> [3] ={halt, set, push};
+        
+        //unordered_map<uint16, void(VM::*)()> function_map = {
+        //    {0x00,&halt},
+        //    {0x01,&set},
+        //    {0x02,&push}
+        //};
+            //{0x03,pop},
+            //{0x04,eq},
+            //{0x05,gr},
+            //{0x06,jmp},
+            //{0x07,jt},
+            //{0x08,jf},
+            //{0x09,add},
+            //{0x10,mult},
+            //{0x11,mod},
+            //{0x12,and_},
+            //{0x13,eq},
+            //{0x14,or_},
+            //{0x15,not_},
+            //{0x16,rmem},
+            //{0x17,wmem},
+            //{0x18,call},
+            //{0x19,ret},
+            //{0x20,out},
+            //{0x21,in_},
+            //{0x22,noop}
+        //};
 
     uint16 running=1; //
 
     //void fetch();
     //void decode();
     //void execute();
-
-
     public:
+        void run();
+        //VM constructor
+        VM(std::string filename){
+            std::ifstream line(filename, std::ios::binary);
+            char bytes [2];
+           
+            int mem_idx=0;
+            while ((mem_idx==0) && (line.read(bytes,2))){
+                std::cout<<("aAaaa")<<std::endl;
+            //    try{
+                
+                //reinterpret_cast<uint16_t*>(&btu[0])
+                uint16_t output =bytes[1];
+                output <<=8;
+                output |= bytes[0];
+                std::cout<<"output:"<<(output)<<std::endl;
+                func_ptr[output];
+            //    }
+            //    catch(int mem_idx){
+            //        std::cout<<mem_idx<<std::endl;
+             //   }
+                mem_idx++;
+
+
+            }
+        }
+
     numtype to_binary_format (uint32_t value);
     void start_VM();
     //void run();

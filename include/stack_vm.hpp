@@ -57,70 +57,36 @@ class VM{
         void in_();
         void noop();
 
-        //void (*funct[22])(void);  
+    public:
+        //void (*funct[22])(void); 
+        using func_t = std::function<void()>;
+        func_t func_array[23]; 
+        VM()
+        {
+            func_array[0] = [this](){ halt(); };
+            func_array[1] = [this](){ set(); };
+            func_array[2] = [this](){ push(); };
+            func_array[3] = [this](){ pop(); };
+            func_array[4] = [this](){ eq(); };
+            func_array[5] = [this](){ gr(); };
+            func_array[6] = [this](){ jmp(); };
+            func_array[7] = [this](){ jt(); };
+            func_array[8] = [this](){ jf(); };
+            func_array[9] = [this](){ add(); };
+            func_array[10] = [this](){ mult(); };
+            func_array[11] = [this](){ mod(); };
+            func_array[12] = [this](){ and_(); };
+            func_array[13] = [this](){ or_(); };
+            func_array[14] = [this](){ not_(); };
+            func_array[15] = [this](){ rmem(); };
+            func_array[16] = [this](){ wmem(); };
+            func_array[17] = [this](){ call(); };
+            func_array[18] = [this](){ ret(); };
+            func_array[19] = [this](){ out(); };
+            func_array[20] = [this](){ in_(); };
+            func_array[21] = [this](){ noop(); };
 
-        void (VM::*func_ptr[23])(void) = {
-            &VM::halt, 
-            &VM::set,
-            &VM::push,
-            &VM::pop,
-            &VM::eq,
-            &VM::gr,
-            &VM::jmp,
-            &VM::jt,            //output (* pointer to function name) (function input)
-            &VM::jf,
-            &VM::add,
-            &VM::mult,
-            &VM::mod,
-            &VM::and_,
-            &VM::or_,
-            &VM::not_,
-            &VM::rmem,
-            &VM::wmem,
-            &VM::call,
-            &VM::ret,
-            &VM::out,
-            &VM::in_,
-            &VM::noop}; 
-
-        //using instruction_t = std::function<void()>;
-        //std::unordered_map<uint16_t, instruction_t> instruction_map {
-        //    {0x01, f1},
-        //    {0x02, f2},
-        //    {0x03, [](){ std::cout << "f3\n";}}
-        //};
-            //f func[22];
-        //funct[0]= halt;
-
-        //void (*functions[3])(halt);
-        //std::function<void> [3] ={halt, set, push};
-        
-        //unordered_map<uint16, void(VM::*)()> function_map = {
-        //    {0x00,&halt},
-        //    {0x01,&set},
-        //    {0x02,&push}
-        //};
-            //{0x03,pop},
-            //{0x04,eq},
-            //{0x05,gr},
-            //{0x06,jmp},
-            //{0x07,jt},
-            //{0x08,jf},
-            //{0x09,add},
-            //{0x10,mult},
-            //{0x11,mod},
-            //{0x12,and_},
-            //{0x13,eq},
-            //{0x14,or_},
-            //{0x15,not_},
-            //{0x16,rmem},
-            //{0x17,wmem},
-            //{0x18,call},
-            //{0x19,ret},
-            //{0x20,out},
-            //{0x21,in_},
-            //{0x22,noop}
-        //};
+        }
 
     uint16 running=1; //
 
@@ -128,32 +94,7 @@ class VM{
     //void decode();
     //void execute();
     public:
-        void run();
         //VM constructor
-        VM(std::string filename){
-            std::ifstream line(filename, std::ios::binary);
-            char bytes [2];
-           
-            int mem_idx=0;
-            while ((mem_idx==0) && (line.read(bytes,2))){
-                std::cout<<("aAaaa")<<std::endl;
-            //    try{
-                
-                //reinterpret_cast<uint16_t*>(&btu[0])
-                uint16_t output =bytes[1];
-                output <<=8;
-                output |= bytes[0];
-                std::cout<<"output:"<<(output)<<std::endl;
-                func_ptr[output];
-            //    }
-            //    catch(int mem_idx){
-            //        std::cout<<mem_idx<<std::endl;
-             //   }
-                mem_idx++;
-
-
-            }
-        }
 
     numtype to_binary_format (uint32_t value);
     void start_VM();

@@ -55,85 +55,86 @@ void load_file(std::string file){
     std::vector<unsigned char> inf (i,e);
 }
 
-void VM::halt(){
+void VM::halt(){    //0
     std::cerr << "Program exit\n";
     std::exit(EXIT_FAILURE);
 }
 
-void VM::set(){
+void VM::set(){     //1
     numtype a,b;
     //memory>>a>>b;
 }
 
-void VM::push(){
+void VM::push(){    //2
     numtype val;
     //stack.push_back(convert_value(val));
     //break;
 }
 
-void VM::pop(){
+void VM::pop(){     //3
     
 }
 
-void VM::eq(){
+void VM::eq(){      //4
 
 }
 
-void VM::gr(){
+void VM::gr(){      //5
 
 }
 
-void VM::jmp(){
+void VM::jmp(){     //6
 
 }
 
-void VM::jt(){
+void VM::jt(){     //7
 
 }
 
-void VM::jf(){
+void VM::jf(){    //8
 
 }
 
-void VM::add(){
+void VM::add(){   //9
     
 }
 
-void VM::mult(){
+void VM::mult(){     //10
     //numtype a,b,c;
     //memory>>a*b;
     
 }
-void VM::mod(){
+void VM::mod(){     //11
     
 }
-void VM::and_(){
+void VM::and_(){     //12
     
 }
-void VM::or_(){
+void VM::or_(){     //13
     
 }
-void VM::not_(){
+void VM::not_(){     //14
     
 }
-void VM::rmem(){
+void VM::rmem(){     //15
     
 }
-void VM::wmem(){
+void VM::wmem(){     //16
     
 }
-void VM::call(){
+void VM::call(){     //17
     
 }
-void VM::ret(){
+void VM::ret(){     //18
     
 }
-void VM::out(){
+void VM::out(){     //19
+    numtype output = this-> memory[memory_it];
+    std::cout<<output<<std::endl;
+}
+void VM::in_(){     //20
     
 }
-void VM::in_(){
-    
-}
-void VM::noop(){
-    
+void VM::noop(){     //21
+    void(0);
 }

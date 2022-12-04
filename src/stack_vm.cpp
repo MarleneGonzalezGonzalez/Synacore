@@ -1,7 +1,8 @@
 #include "stack_vm.hpp"
 #include <iostream>
 #include <fstream>
-#
+
+typedef signed short numtype;
 /* header : 2 bits
 *data: 30 bits
 *
@@ -21,6 +22,17 @@
 //    load_file("filename");
 //    reg.insert(std::begin(reg), 8, 0);
 //}
+
+numtype VM::get_mem(uint16_t& mem_it){
+        return memory[mem_it];
+    }
+
+void VM::set_mem(int mem_it, char mem){
+        if (mem_it < 32776){
+            //add memory int and see how to set memory to value specific
+            memory[mem_it] = mem;
+        }
+    }
 
 numtype VM::to_binary_format (const uint32_t val) {
     if (val <= 32767) {
@@ -55,86 +67,91 @@ void load_file(std::string file){
     std::vector<unsigned char> inf (i,e);
 }
 
-void VM::halt(){    //0
+void VM::halt(VM& vm, ifstream& line){    //0
     std::cerr << "Program exit\n";
     std::exit(EXIT_FAILURE);
 }
 
-void VM::set(){     //1
+void VM::set(VM& vm, ifstream& line){     //1
     numtype a,b;
     //memory>>a>>b;
 }
 
-void VM::push(){    //2
+void VM::push(VM& vm, ifstream& line){    //2
     numtype val;
     //stack.push_back(convert_value(val));
     //break;
 }
 
-void VM::pop(){     //3
+void VM::pop(VM& vm, ifstream& line){     //3
     
 }
 
-void VM::eq(){      //4
+void VM::eq(VM& vm, ifstream& line){      //4
 
 }
 
-void VM::gr(){      //5
+void VM::gr(VM& vm, ifstream& line){      //5
 
 }
 
-void VM::jmp(){     //6
-
-}
-
-void VM::jt(){     //7
-
-}
-
-void VM::jf(){    //8
-
-}
-
-void VM::add(){   //9
+void VM::jmp(VM& vm, ifstream& line){     //6
     
 }
 
-void VM::mult(){     //10
+void VM::jt(VM& vm, ifstream& line){     //7
+
+}
+
+void VM::jf(VM& vm, ifstream& line){    //8
+
+}
+
+void VM::add(VM& vm, ifstream& line){   //9
+    
+}
+
+void VM::mult(VM& vm, ifstream& line){     //10
     //numtype a,b,c;
     //memory>>a*b;
     
 }
-void VM::mod(){     //11
+void VM::mod(VM& vm, ifstream& line){     //11
     
 }
-void VM::and_(){     //12
+void VM::and_(VM& vm, ifstream& line){     //12
     
 }
-void VM::or_(){     //13
+void VM::or_(VM& vm, ifstream& line){     //13
     
 }
-void VM::not_(){     //14
+void VM::not_(VM& vm, ifstream& line){     //14
     
 }
-void VM::rmem(){     //15
+void VM::rmem(VM& vm, ifstream& line){     //15
     
 }
-void VM::wmem(){     //16
+void VM::wmem(VM& vm, ifstream& line){     //16
     
 }
-void VM::call(){     //17
+void VM::call(VM& vm, ifstream& line){     //17
     
 }
-void VM::ret(){     //18
+void VM::ret(VM& vm, ifstream& line){     //18
     
 }
-void VM::out(){     //19
-    numtype output = this-> memory[memory_it];
-    std::cout<<output<<std::endl;
+void VM::out(VM& vm, ifstream& line){     //19
+    char char_ascii [2];
+    line.read(char_ascii,2);
+    vm.set_mem(19,char(char_ascii[0]));
+    // vm.memory[19] = char_ascii[0]
+    
+    // numtype output = this-> memory[memory_it];
+    // std::cout<<char_ascii[0]<<std::endl;
 }
-void VM::in_(){     //20
+void VM::in_(VM& vm, ifstream& line){     //20
     
 }
-void VM::noop(){     //21
+void VM::noop(VM& vm, ifstream& line){     //21
     void(0);
 }

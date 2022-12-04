@@ -30,63 +30,101 @@ class VM{
         void load_file(std::string file);
         void run_program(uint16 ptr);
 
-        //std::vector<std::function<void(void)>> prepareInstructions();
-        //std::vector<char> input;
-//        using instruction_t = std::function<void()>;
-
-        void halt();
-        void set();
-        void push();
-        void pop();
-        void eq();
-        void gr();
-        void jmp();
-        void jt();
-        void jf();
-        void add();
-        void mult();
-        void mod();
-        void and_();
-        void or_();
-        void not_();    
-        void rmem();
-        void wmem();
-        void call();
-        void ret();
-        void out();
-        void in_();
-        void noop();
+        public:
+        // void (halt_)(ifstream& line);
+        void static (halt)(VM& vm, ifstream& line);
+        // void (VM::*halt)(ifstream& line) = &VM::halt_;
+        // unique_ptr<>;        
+        void static (set)(VM& vm, ifstream& line);
+        void static (push)(VM& vm, ifstream& line);
+        void static (pop)(VM& vm, ifstream& line);
+        void static (eq)(VM& vm, ifstream& line);
+        void static (gr)(VM& vm, ifstream& line);
+        void static (jmp)(VM& vm, ifstream& line);
+        void static (jt)(VM& vm, ifstream& line);
+        void static (jf)(VM& vm, ifstream& line);
+        void static (add)(VM& vm, ifstream& line);
+        void static (mult)(VM& vm, ifstream& line);
+        void static (mod)(VM& vm, ifstream& line);
+        void static (and_)(VM& vm, ifstream& line);
+        void static (or_)(VM& vm, ifstream& line);
+        void static (not_)(VM& vm, ifstream& line);    
+        void static (rmem)(VM& vm, ifstream& line);
+        void static (wmem)(VM& vm, ifstream& line);
+        void static (call)(VM& vm, ifstream& line);
+        void static (ret)(VM& vm, ifstream& line);
+        void static (out)(VM& vm, ifstream& line);
+        void static (in_)(VM& vm, ifstream& line);
+        void static (noop)(VM& vm, ifstream& line);
 
     public:
         //void (*funct[22])(void); 
-        using func_t = std::function<void()>;
-        func_t func_array[23]; 
-        VM()
-        {
-            func_array[0] = [this](){ halt(); };
-            func_array[1] = [this](){ set(); };
-            func_array[2] = [this](){ push(); };
-            func_array[3] = [this](){ pop(); };
-            func_array[4] = [this](){ eq(); };
-            func_array[5] = [this](){ gr(); };
-            func_array[6] = [this](){ jmp(); };
-            func_array[7] = [this](){ jt(); };
-            func_array[8] = [this](){ jf(); };
-            func_array[9] = [this](){ add(); };
-            func_array[10] = [this](){ mult(); };
-            func_array[11] = [this](){ mod(); };
-            func_array[12] = [this](){ and_(); };
-            func_array[13] = [this](){ or_(); };
-            func_array[14] = [this](){ not_(); };
-            func_array[15] = [this](){ rmem(); };
-            func_array[16] = [this](){ wmem(); };
-            func_array[17] = [this](){ call(); };
-            func_array[18] = [this](){ ret(); };
-            func_array[19] = [this](){ out(); };
-            func_array[20] = [this](){ in_(); };
-            func_array[21] = [this](){ noop(); };
+        // (* arr [3])(int)
+        
+        // typedef void(*func_t)(ifstream&);
+        // void (VM::*func_array[23])(ifstream& st);
+        // typedef std::function<void(ifstream)> as func_t;
+        // using func_t = std::function<void(ifstream)>;
+        // std::array< func_t, 23> func_array; 
+        // typedef void(*func_t)(ifstream&);
+        void static (VM::*func_array[23])(VM& vm, ifstream& st);
 
-        }
+        // VM()
+        // {
+            
+        //     // void (VM::*functptr[23])(ifstream&) = {halt, set, push, pop};
+            
+        //     // void (VM::*functptr[23])(ifstream&) = {halt, set, push, pop, eq, gr, jmp, jt, jf, add, mult, mod,
+        //     // and_, or_, not_, rmem, wmem, call, ret, out, in_, noop} ;
+        //     // func_array[0] = VM::halt;
+        //     // func_array[1] = VM::set;
+        //     // func_array[2] = VM::push;
+        //     // func_array[3] = VM::pop;
+        //     // func_array[4] = VM::eq;
+        //     // func_array[5] = VM::gr;
+        //     // func_array[6] = VM::jmp;
+        //     // func_array[7] = VM::jt; 
+        //     // func_array[8] = VM::jf; 
+        //     // func_array[9] = VM::add;
+        //     // func_array[10] = VM::mult;
+        //     // func_array[11] = VM::mod; 
+        //     // func_array[12] = VM::and_;
+        //     // func_array[13] = VM::or_; 
+        //     // func_array[14] = VM::not_;
+        //     // func_array[15] = VM::rmem;
+        //     // func_array[16] = VM::wmem;
+        //     // func_array[17] = VM::call;
+        //     // func_array[18] = VM::ret; 
+        //     // func_array[19] = VM::out; 
+        //     // func_array[20] = VM::in_; 
+        //     // func_array[21] = VM::noop;
+            
+            
+            
+        //     // func_array2[0] = [this](ifstream st){ halt; };
+        //     // func_array2[1] = [this](ifstream st){&set; };
+        //     // func_array2[2] = [this](ifstream st){ push; };
+        //     // func_array[3] = [this](ifstream){ pop; };
+        //     // func_array[4] = [this](ifstream){ eq; };
+        //     // func_array[5] = [this](ifstream){ gr; };
+        //     // func_array[6] = [this](ifstream){ jmp; };
+        //     // func_array[7] = [this](ifstream){ jt; };
+        //     // func_array[8] = [this](ifstream){ jf; };
+        //     // func_array[9] = [this](ifstream){ add; };
+        //     // func_array[10] = [this](ifstream){ mult; };
+        //     // func_array[11] = [this](ifstream){ mod; };
+        //     // func_array[12] = [this](ifstream){ and_; };
+        //     // func_array[13] = [this](ifstream){ or_; };
+        //     // func_array[14] = [this](ifstream){ not_; };
+        //     // func_array[15] = [this](ifstream){ rmem; };
+        //     // func_array[16] = [this](ifstream){ wmem; };
+        //     // func_array[17] = [this](ifstream){ call; };
+        //     // func_array[18] = [this](ifstream){ ret; };
+        //     // func_array[19] = [this](ifstream){ out; };
+        //     // func_array[20] = [this](ifstream){ in_; };
+        //     // func_array[21] = [this](ifstream){ noop; };
+
+        // }
 
     uint16 running=1; //
 
@@ -96,7 +134,7 @@ class VM{
     public:
         //VM constructor
 
-    numtype to_binary_format (uint32_t value);
+    numtype to_binary_format (const uint32_t value);
     void start_VM();
     //void run();
     void loadProgram(std::vector<uint16> prog);
@@ -114,15 +152,8 @@ class VM{
         }
     }
 
-    numtype get_mem(VM vm, numtype mem_it){
-        return vm.memory[mem_it];
-    }
+    numtype get_mem(uint16_t& mem_it);
 
-    void set_mem(VM vm, numtype mem_it, numtype mem){
-        if (mem_it < 32776){
-            //add memory int and see how to set memory to value specific
-            vm.memory[mem_it] = mem;
-        }
-    }
+    void set_mem(int mem_it, char mem);
 
 };
